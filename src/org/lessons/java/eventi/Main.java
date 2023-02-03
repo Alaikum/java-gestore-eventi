@@ -3,6 +3,7 @@ package org.lessons.java.eventi;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -11,11 +12,15 @@ public class Main {
 
 		Evento eve;
 		LocalDate lDate;
+		boolean bonus=false;
 		int postiTotale, giorno, mese, anno, prenotazioni, disdette;
 		String titolo, disdire;
 		Scanner s = new Scanner(System.in);
 		
-		
+		System.out.println("Vuoi vedere anche la parte bonus?(s/n)");
+		if(s.nextLine().trim().toLowerCase().equals("s")) {
+			bonus=true;
+		}
 
 		System.out.println("Inserisci il TITOLO dell'evento: ");
 		titolo = s.nextLine();
@@ -34,27 +39,41 @@ public class Main {
 		lDate = LocalDate.of(anno, mese, giorno);
 
 		try {
-			
-			//controllo delle funzionalità della classe Concerto
-			Concerto con=new Concerto(titolo, lDate, postiTotale, LocalTime.of(23, 50), new BigDecimal(".566"));
-			System.out.println(con.toString());
-			
-			
+
+			// controllo delle funzionalità della classe Concerto
+			Concerto con = new Concerto(titolo, lDate, postiTotale, LocalTime.of(23, 50), new BigDecimal(".566"));
+			System.out.println("Print di Concerto per test"+con.toString());
+
 			eve = new Evento(titolo, lDate, postiTotale);
 			System.out.println(eve.toString());
-			
-			//TEST BONUS
-			ProgrammEventi pE=new ProgrammEventi("raccoltaEventi");
+
+			// TEST BONUS
+			if(bonus) {
+				System.out.println("INIZIO BONUS");
+				
+			ProgrammEventi pE = new ProgrammEventi("raccolta-Eventi");
+			Concerto con2 = new Concerto("con2", LocalDate.of(4443, 1, 1), postiTotale, LocalTime.of(23, 50), new BigDecimal(".566"));
 			pE.addEvento(con);
 			pE.addEvento(eve);
+			pE.addEvento(con2);
+			
+			//trova eventi con data uguale a quella inserita dall'utente 
 			pE.getEventiSameDate(LocalDate.of(4444, 1, 1));
 			System.out.println(pE.getEventi());
-			
+			System.out.println("Il numero di eventi in lista è : " + pE.getNumEventi());
+			System.out.println("Stringa Eventi Ordinati + Titolo: ");
+			System.out.println(	pE.getOrderList());
+		
+			pE.clearList();
+	
+			System.out.println(pE.getEventi());
+			System.out.println("FINE BONUS");
+			}
 
 			// CHIEDERE QUANTE PRENOTAZIONI FARE
 			System.out.println("Quanti posti vuoi prenotare per l'evento?");
 			prenotazioni = Integer.parseInt(s.nextLine());
-			//FARE PRENOTAZIONI
+			// FARE PRENOTAZIONI
 			for (int i = 0; i < prenotazioni; i++) {
 				eve.prenota();
 			}
@@ -67,7 +86,7 @@ public class Main {
 			if (disdire.trim().toLowerCase().equals("s")) {
 				System.out.println("Quanti posti vuoi disdire?");
 				disdette = Integer.parseInt(s.nextLine());
-				//FARE DISDETTE
+				// FARE DISDETTE
 				for (int i = 0; i < disdette; i++) {
 					eve.disdici();
 				}
@@ -128,8 +147,6 @@ public class Main {
 //				eventuali eccezioni
 //				6. Stampare a video il numero di posti prenotati e quelli disponibili
 
-		
-		
 //				MILESTONE 3
 //				Creare una classe Concerto che estende Evento, che ha anche gli attributi :
 //				● ora: LocalTime
@@ -138,15 +155,14 @@ public class Main {
 //				Aggiungere i metodi per restituire data e ora formattata e prezzo formattato (##,##€)
 //				Fare l’ override del metodo toString() in modo che venga restituita una stringa del tipo:
 //				data e ora formattata - titolo - prezzo formattato
-		
-		
+
 //				MILESTONE 4 (bonus)
 //				Creare una classe ProgrammEventi con i seguenti attributi
 //				● titolo: String
 //				● eventi: List<Evento>
 //				Nel costruttore valorizzare il titolo, passato come parametro, e inizializzare la lista di eventi
 //				come una nuova ArrayList
-		
+
 //				Aggiungere i seguenti metodi :
 //				● un metodo che aggiunge alla lista un Evento, passato come parametro
 //				● un metodo che restituisce una lista con tutti gli eventi presenti in una certa data

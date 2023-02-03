@@ -9,7 +9,7 @@ public class Evento {
 	private String  titolo;
 	private LocalDate ld,nowDate=LocalDate.now();
 	private int postiTotale, postiPrenotati;
-	private DateTimeFormatter df=DateTimeFormatter.ofPattern("dd/MM/yyyy").withLocale(Locale.ITALIAN);
+	private static DateTimeFormatter df=DateTimeFormatter.ofPattern("dd/MM/yyyy").withLocale(Locale.ITALIAN);
 	
 	
 	public Evento(String titolo, LocalDate ld, int postiTotale) throws PastDate, ExistingPlaces {
@@ -31,6 +31,10 @@ public class Evento {
 	public void validatePostiTotale(int p) throws ExistingPlaces {
 		if(p<1)
 			throw new ExistingPlaces();
+	}
+	
+	public String formatData() {
+		return ld.format(df);
 	}
 
 	public String getTitolo() {
@@ -74,7 +78,7 @@ public class Evento {
 
 	@Override
 	public String toString() {
-		return "Data= " + ld.format(df) + " - Titolo= " + titolo;
+		return "Data= " + formatData() + " - Titolo= " + getTitolo();
 	}
 	
 	

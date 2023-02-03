@@ -1,6 +1,8 @@
 package org.lessons.java.eventi;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Main {
@@ -9,8 +11,8 @@ public class Main {
 
 		Evento eve;
 		LocalDate lDate;
-		int postiTotale, giorno, mese, anno, prenotazioni,disdette;
-		String titolo,disdire;
+		int postiTotale, giorno, mese, anno, prenotazioni, disdette;
+		String titolo, disdire;
 		Scanner s = new Scanner(System.in);
 
 		System.out.println("Inserisci il TITOLO dell'evento: ");
@@ -30,36 +32,41 @@ public class Main {
 		lDate = LocalDate.of(anno, mese, giorno);
 
 		try {
+			
+			//controllo delle funzionalità della classe Concerto
+			Concerto con=new Concerto(titolo, lDate, postiTotale, LocalTime.of(23, 50), new BigDecimal(".566"));
+			System.out.println(con.toString());
+			
+			
 			eve = new Evento(titolo, lDate, postiTotale);
+			System.out.println(eve.toString());
+
 			// CHIEDERE QUANTE PRENOTAZIONI FARE
 			System.out.println("Quanti posti vuoi prenotare per l'evento?");
 			prenotazioni = Integer.parseInt(s.nextLine());
-
+			//FARE PRENOTAZIONI
 			for (int i = 0; i < prenotazioni; i++) {
 				eve.prenota();
 			}
-			System.out.printf("Posti Prenotati: %d\nPosti ancora Disponibili: %d\n",eve.getPostiPrenotati(),eve.getPostiTotale()-eve.getPostiPrenotati());
+			System.out.printf("Posti Prenotati: %d\nPosti ancora Disponibili: %d\n", eve.getPostiPrenotati(),
+					eve.getPostiTotale() - eve.getPostiPrenotati());
 
-			//Chiedere all’utente se e quanti posti vuole disdire
+			// Chiedere all’utente se e quanti posti vuole disdire
 			System.out.println("Vuoi disdire qualche posto?\nS/N: ");
-			disdire=s.nextLine();
-			if(disdire.trim().toLowerCase().equals("s")) {
+			disdire = s.nextLine();
+			if (disdire.trim().toLowerCase().equals("s")) {
 				System.out.println("Quanti posti vuoi disdire?");
-				disdette=Integer.parseInt(s.nextLine());
-				
+				disdette = Integer.parseInt(s.nextLine());
+				//FARE DISDETTE
 				for (int i = 0; i < disdette; i++) {
-								eve.disdici();
-								
+					eve.disdici();
 				}
-				
+
 			}
-			
-			System.out.printf("Posti Prenotati: %d\nPosti ancora Disponibili: %d\n",eve.getPostiPrenotati(),eve.getPostiTotale()-eve.getPostiPrenotati());
-			
-			
-			
-			
-			
+
+			System.out.printf("Posti Prenotati: %d\nPosti ancora Disponibili: %d\n", eve.getPostiPrenotati(),
+					eve.getPostiTotale() - eve.getPostiPrenotati());
+
 		} catch (Exception e) {
 			System.out.println("ATTENZIONE : " + e.getMessage());
 		}
@@ -111,6 +118,8 @@ public class Main {
 //				eventuali eccezioni
 //				6. Stampare a video il numero di posti prenotati e quelli disponibili
 
+		
+		
 //				MILESTONE 3
 //				Creare una classe Concerto che estende Evento, che ha anche gli attributi :
 //				● ora: LocalTime
@@ -119,6 +128,8 @@ public class Main {
 //				Aggiungere i metodi per restituire data e ora formattata e prezzo formattato (##,##€)
 //				Fare l’ override del metodo toString() in modo che venga restituita una stringa del tipo:
 //				data e ora formattata - titolo - prezzo formattato
+		
+		
 //				MILESTONE 4 (bonus)
 //				Creare una classe ProgrammEventi con i seguenti attributi
 //				● titolo: String

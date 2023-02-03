@@ -14,6 +14,8 @@ public class Main {
 		int postiTotale, giorno, mese, anno, prenotazioni, disdette;
 		String titolo, disdire;
 		Scanner s = new Scanner(System.in);
+		
+		
 
 		System.out.println("Inserisci il TITOLO dell'evento: ");
 		titolo = s.nextLine();
@@ -40,6 +42,14 @@ public class Main {
 			
 			eve = new Evento(titolo, lDate, postiTotale);
 			System.out.println(eve.toString());
+			
+			//TEST BONUS
+			ProgrammEventi pE=new ProgrammEventi("raccoltaEventi");
+			pE.addEvento(con);
+			pE.addEvento(eve);
+			pE.getEventiSameDate(LocalDate.of(4444, 1, 1));
+			System.out.println(pE.getEventi());
+			
 
 			// CHIEDERE QUANTE PRENOTAZIONI FARE
 			System.out.println("Quanti posti vuoi prenotare per l'evento?");
@@ -136,6 +146,7 @@ public class Main {
 //				● eventi: List<Evento>
 //				Nel costruttore valorizzare il titolo, passato come parametro, e inizializzare la lista di eventi
 //				come una nuova ArrayList
+		
 //				Aggiungere i seguenti metodi :
 //				● un metodo che aggiunge alla lista un Evento, passato come parametro
 //				● un metodo che restituisce una lista con tutti gli eventi presenti in una certa data
